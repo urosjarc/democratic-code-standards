@@ -1,0 +1,39 @@
+openapi: "3.0.3"
+info:
+  title: "democratic_code_standards API"
+  description: "democratic_code_standards API"
+  version: "1.0.0"
+servers:
+- url: "https://democratic_code_standards"
+paths:
+  /language:
+    get:
+      description: "LANGUAGE"
+      parameters:
+      - name: "parent"
+        in: "query"
+        required: true
+        schema:
+          type: "object"
+  /user/feedback:
+    get:
+      description: ""
+    post:
+      description: ""
+  /user/login:
+    post:
+      description: "USER"
+      parameters:
+      - name: "password"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "email"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+  /user/logout:
+    get:
+      description: ""
