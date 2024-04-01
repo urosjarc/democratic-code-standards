@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltestrap/sveltestrap": "^6.2.7",
 		"openapi-typescript-codegen": "^0.28.0"
 	}
 }
