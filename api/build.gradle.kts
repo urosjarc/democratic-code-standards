@@ -6,13 +6,14 @@ plugins {
     kotlin("jvm") version "1.9.23"
     id("io.ktor.plugin") version "2.3.9"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
+//    id("buildSrc.jwks")
 }
 
 group = "com.urosjarc"
 version = "0.0.1"
 
 application {
-    mainClass.set("com.urosjarc.ApplicationKt")
+    mainClass.set("MainKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -21,6 +22,10 @@ application {
 repositories {
     mavenCentral()
 }
+
+//configure<BuildSrc_jwks_gradle.JwksExtension> {
+//    this.outputDir.set("src/main/resources/static/.well-known/jwks.json")
+//}
 
 dependencies {
     //Database
@@ -37,7 +42,6 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0")
 
     val ktor_version = "2.3.8"
-    implementation("org.jetbrains.kotlin:kotlin-test")
     implementation("io.ktor:ktor-server-resources:$ktor_version")
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
@@ -46,4 +50,7 @@ dependencies {
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-sessions:$ktor_version")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
 }

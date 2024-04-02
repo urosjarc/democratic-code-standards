@@ -7,7 +7,7 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"openapi": "openapi --input ../api/src/main/resources/openapi/documentation.yaml --output ./src/lib/api --client fetch"
+		"openapi": "openapi --input ../api/src/main/resources/openapi/documentation.yaml --output ./src/lib/api --client fetch --useOptions --request ./src/lib/request.ts"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",

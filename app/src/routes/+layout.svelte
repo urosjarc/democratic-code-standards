@@ -1,4 +1,17 @@
-<script></script>
+<script>
+
+    import {OpenAPI} from "$lib/api";
+
+    OpenAPI.BASE = "http://0.0.0.0:8080"
+    OpenAPI.HEADERS = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+
+    function init() {
+
+    }
+</script>
 
 <div class="app">
     <a href="/feedback">Feedback</a>

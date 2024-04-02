@@ -5,35 +5,97 @@ info:
   version: "1.0.0"
 servers:
 - url: "https://democratic_code_standards"
+tags:
+- name: "Language"
+  description: "Providing programming language related services."
+- name: "User"
+  description: "Providing user related services."
 paths:
   /language:
     get:
-      description: "LANGUAGE"
+      tags:
+      - "Language"
+      description: "Get list of programming languages."
       parameters:
       - name: "parent"
         in: "query"
         required: true
         schema:
           type: "object"
+  /user:
+    get:
+      tags:
+      - "User"
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Profil"
   /user/feedback:
     get:
-      description: ""
+      tags:
+      - "User"
+      description: "Getting all user feedbacks."
     post:
-      description: ""
+      tags:
+      - "User"
+      description: "Creating new user feedback."
   /user/login:
     post:
-      description: "USER"
-      parameters:
-      - name: "password"
-        in: "query"
+      tags:
+      - "User"
+      description: "Access point for user to login."
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserLoginReq"
         required: true
-        schema:
-          type: "string"
-      - name: "email"
-        in: "query"
-        required: true
-        schema:
-          type: "string"
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PrijavaRes"
   /user/logout:
     get:
-      description: ""
+      tags:
+      - "User"
+      description: "Action for user logout."
+components:
+  schemas:
+    Profil:
+      type: "object"
+      properties:
+        user_id:
+          type: "string"
+          format: "uuid"
+      required:
+      - "user_id"
+    UserLoginReq:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "email"
+      - "password"
+    PrijavaRes:
+      type: "object"
+      properties:
+        token:
+          type: "string"
+      required:
+      - "token"

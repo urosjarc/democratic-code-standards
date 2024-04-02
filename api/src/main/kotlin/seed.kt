@@ -53,6 +53,9 @@ object seed {
         )
 
         db.autocommit {
+            it.schema.dropCascade(schema = codeStyleSchema)
+            it.schema.dropCascade(schema = userSchema)
+
             it.schema.create(schema = codeStyleSchema)
             it.schema.create(schema = userSchema)
 
