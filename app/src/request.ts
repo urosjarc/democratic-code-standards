@@ -3,10 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import {ApiError, CancelablePromise, type OpenAPIConfig} from "$lib/api";
-import type {ApiRequestOptions} from "$lib/api/core/ApiRequestOptions";
-import type {ApiResult} from "$lib/api/core/ApiResult";
-import type {OnCancel} from "$lib/api/core/CancelablePromise";
+import {ApiError, CancelablePromise, type OpenAPIConfig} from "../"
+
+import type {ApiRequestOptions} from "./ApiRequestOptions";
+import type {ApiResult} from "./ApiResult";
+import type {OnCancel} from "./CancelablePromise";
 
 export const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
     return value !== undefined && value !== null;

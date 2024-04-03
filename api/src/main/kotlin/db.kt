@@ -43,7 +43,7 @@ val serializer = PgSerializer(
     globalSerializers = BasicTS.postgresql + KotlinxTimeTS.postgresql + listOf(
         IdTS.uuid.postgresql(construct = { Id<Any>(it) }, deconstruct = { it.value })
     ),
-    globalInputs = listOf(UserLoginReq::class)
+    globalInputs = listOf(UserLoginReq::class, Profil::class),
 )
 
 val config = Properties().apply {

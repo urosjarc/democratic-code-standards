@@ -2,8 +2,8 @@ object seed {
     fun all() {
 
         val users = listOf(
-            User(email = "uros.jarc@solvesall.com", password = "pass", admin = true),
-            User(email = "name.surname@solvesall.com", password = "pass", admin = true),
+            User(email = "email", password = "pass", admin = true),
+            User(email = "email2", password = "pass", admin = true),
         )
 
         val languages = listOf(

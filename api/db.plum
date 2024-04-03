@@ -1,0 +1,49 @@
+@startuml
+skinparam backgroundColor darkgray
+skinparam ClassBackgroundColor lightgray
+
+package codeStyle <<Folder>> {
+	class codeStyle.Language {
+		id: Id
+	}
+	class codeStyle.Linter {
+		id: Id
+		language: Language
+	}
+	class codeStyle.LinterRule {
+		id: Id
+	}
+}
+package user <<Folder>> {
+	class user.UserLanguage {
+		id: Id
+		language: Language
+		user: User
+	}
+	class user.Vote {
+		id: Id
+		linterRule: LinterRule
+		rating: Rating
+		user: User
+	}
+	class user.User {
+		id: Id
+	}
+	class user.Rating {
+		id: Id
+	}
+	class user.Feedback {
+		id: Id
+		user: User
+	}
+}
+
+codeStyle.Linter -down-> codeStyle.Language: language
+user.UserLanguage -down-> codeStyle.Language: language
+user.UserLanguage -down-> user.User: user
+user.Vote -down-> codeStyle.LinterRule: linterRule
+user.Vote -down-> user.Rating: rating
+user.Vote -down-> user.User: user
+user.Feedback -down-> user.User: user
+
+@enduml

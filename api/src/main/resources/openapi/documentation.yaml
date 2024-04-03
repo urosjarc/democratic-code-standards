@@ -16,12 +16,21 @@ paths:
       tags:
       - "Language"
       description: "Get list of programming languages."
-      parameters:
-      - name: "parent"
-        in: "query"
-        required: true
-        schema:
-          type: "object"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Language"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /user:
     get:
       tags:
@@ -34,15 +43,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Profil"
-  /user/feedback:
-    get:
-      tags:
-      - "User"
-      description: "Getting all user feedbacks."
-    post:
-      tags:
-      - "User"
-      description: "Creating new user feedback."
   /user/login:
     post:
       tags:
@@ -74,6 +74,17 @@ paths:
       description: "Action for user logout."
 components:
   schemas:
+    Language:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+      required:
+      - "id"
+      - "name"
     Profil:
       type: "object"
       properties:

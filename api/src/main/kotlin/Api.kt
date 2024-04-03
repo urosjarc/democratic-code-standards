@@ -50,11 +50,6 @@ class UserRoute {
 
     @Resource("logout")
     class Logout(val parent: UserRoute)
-
-    @Resource("feedback")
-    class Feedback(val parent: UserRoute) {
-
-    }
 }
 
 /**
@@ -62,19 +57,15 @@ class UserRoute {
  * Providing programming language related services.
  **/
 @Resource("/language")
-class LanguageRoute(val parent: UserRoute) {
-    @Resource("{id}")
-    class IdRoute(val parent: UserRoute, val id: Id<Language>) {
-        @Resource("/linter")
-        class Linter(val parent: UserRoute) {
-
-            @Resource("/rule")
-            class Rule(val parent: Linter) {
-
-            }
-        }
-    }
+class LanguageRoute {
 }
+
+/**
+ * @OpenAPITag Feedback
+ * Providing feedback related services.
+ **/
+@Resource("/feedback")
+class FeedbackRoute
 
 object api {
     @JvmStatic
@@ -164,7 +155,7 @@ object api {
                         if (users.size == 1) user = users.firstOrNull()
                     }
 
-                    if(user == null) return@post this.call.respond(HttpStatusCode.Unauthorized)
+                    if (user == null) return@post this.call.respond(HttpStatusCode.Unauthorized)
 
                     val publicKey = jwkProvider.get(ENV.JWT_KEYID).publicKey
                     val keySpecPKCS8 = PKCS8EncodedKeySpec(Base64.getDecoder().decode(ENV.JWT_PRIVATE_KEY))
@@ -194,22 +185,27 @@ object api {
 
                     }
                     /**
-                     * Getting all user feedbacks.
-                     */
-                    get<UserRoute.Feedback> {
-
-                    }
-                    /**
-                     * Creating new user feedback.
-                     */
-                    post<UserRoute.Feedback> {
-
-                    }
-                    /**
                      * Get list of programming languages.
                      */
                     get<LanguageRoute> {
+                        val profil = this.call.profil()
+                        var languages: List<Language>? = null
 
+                        db.autocommit {
+                            languages = it.query.get(output = Language::class, input = profil) {
+                                """
+                                    ${it.SELECT<Language>()}
+                                    join ${it.table<UserLanguage>()} on
+                                        ${it.column(UserLanguage::user)} = ${it.input(Profil::user_id)}
+                                """
+                            }.distinctBy { it.id }
+
+
+                        }
+
+                        if (languages != null) {
+                            this.call.respond(languages!!)
+                        } else this.call.respond(HttpStatusCode.Unauthorized)
                     }
                 }
             }
